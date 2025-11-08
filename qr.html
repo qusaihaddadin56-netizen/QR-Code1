@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0f1e" />
+    <title>Language & Destination</title>
+
+    <link rel="icon" type="image/svg+xml"
+          href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="%236ea8fe"/><stop offset="1" stop-color="%2300e5ff"/></linearGradient></defs><rect width="64" height="64" rx="12" fill="%2310172b"/><path d="M16 40 L30 12 L28 28 L48 24 L34 52 L36 36 Z" fill="url(%23g)"/></svg>' />
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAABq2m1NAAAACXBIWXMAAAsSAAALEgHS3X78AAABvElEQVR4nO3SQQ3CMBAF0ZCq//9b0l2g7qfQyJmCGN1Jg0z7nXoJw2H7mT0WgAAAAAAAAAAAAAAAKwq1b8wUj4iG3w9c8i8m9vC3H0qgqQFJbBqj4wqfVEz6H3m4lA9EJ2zWJcQe6t4b5a3iLw1mQ3b8x6s2dB8sQq5n9tq1m1wE2o2zsaE2wD8m8nI6x3b9qv3a8Q3xg2n9Y5a2Qd8o1y0y5cD4Xb0n1w1JzKfT1v7oH2cV7a0d6Z1s1eWJcukqk8D9Q7d0m2t2fQe6pQOId2o1x9o3Zc4c8p1GqX+oNn6bC3cR5o0t4p3Vqg0i9a2o0a9eXQb1l8b7h9QvQm0H2a4c2r3b8B4m9b2U7o3t8Y7mP2m4o3a7s+3k1mYbQH3e9zP4vRVwK0Ww6cQ7q3fW/3y1c6m9fO2o3c5Z8V7n7Qk0AAAAAAABgZr8B6b5w0kqz/2MAAAAASUVORK5CYII=">
+
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;800&family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0b0f1e;
+            --text: #ffffff;
+            --muted: #97a3c0;
+            --card: rgba(255,255,255,.06);
+            --stroke: rgba(255,255,255,.12);
+            --btn-bg: #151a2d;
+            --btn-text: #fff;
+            --accent1: #6ea8fe;
+            --accent2: #00e5ff;
+            --radius: 18px;
+            --shadow: 0 10px 30px rgba(0,0,0,.35);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background: var(--bg);
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            font-family: "IBM Plex Sans Arabic","Inter",ui-sans-serif,system-ui,-apple-system,Segoe UI,Tahoma,Arial;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(1200px 800px at 10% 10%, #11183a 40%, transparent 60%), radial-gradient(900px 700px at 90% 90%, #0b142a 35%, transparent 60%), linear-gradient(160deg, #0a0f22, #0b0f1e 60%);
+        }
+
+        .card {
+            width: min(92vw,600px);
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            padding: 26px;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(10px);
+        }
+
+        h1 {
+            margin: 0 0 6px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
+
+        .subtitle {
+            margin: 0 0 20px;
+            text-align: center;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .language-btn {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: 1px solid var(--stroke);
+            cursor: pointer;
+            padding: 12px 18px;
+            border-radius: 14px;
+            min-height: 48px;
+            font-size: 17px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform .15s ease, box-shadow .25s ease, background .2s ease, border-color .2s ease;
+            box-shadow: 0 6px 14px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.05);
+        }
+
+            .language-btn:hover {
+                transform: translateY(-2px)
+            }
+
+            .language-btn:focus-visible {
+                outline: 3px solid var(--accent2);
+                outline-offset: 3px
+            }
+
+        .flag {
+            font-size: 22px
+        }
+
+        .links {
+            display: none;
+            margin-top: 12px;
+            gap: 12px;
+        }
+
+        @media(min-width:480px) {
+            .links.grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        .links.grid {
+            display: grid
+        }
+
+        .link-btn {
+            border: none;
+            cursor: pointer;
+            padding: 16px;
+            border-radius: 14px;
+            min-height: 54px;
+            font-size: 17px;
+            font-weight: 900;
+            text-align: center;
+            color: #001018;
+            background: linear-gradient(135deg,var(--accent1),var(--accent2));
+            box-shadow: 0 8px 22px rgba(0,0,0,.35), 0 10px 30px rgba(0,229,255,.18);
+            transition: transform .15s ease, box-shadow .25s ease, filter .2s ease;
+        }
+
+            .link-btn:hover {
+                transform: translateY(-2px)
+            }
+
+            .link-btn:focus-visible {
+                outline: 3px solid #fff;
+                outline-offset: 2px
+            }
+
+        .fade {
+            opacity: 1;
+            transition: opacity .35s ease
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .flag[data-fallback]:before {
+            content: attr(data-fallback);
+            display: inline-block;
+            font-weight: 900;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            background: #20304a;
+            color: #fff;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .language-btn:hover, .link-btn:hover, .fade {
+                transition: none
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <main class="card" role="main" aria-labelledby="title">
+        <h1 id="title">اختيار اللغة</h1>
+        <p class="subtitle" id="subtitle">Select your preferred language</p>
+
+        <div class="row fade" id="langRow" aria-label="Language selection">
+            <button type="button" class="language-btn" id="btn-ar" aria-pressed="false">
+                <span class="flag" id="flag-ar">🇯🇴</span> <span class="lbl">العربية</span>
+            </button>
+            <button type="button" class="language-btn" id="btn-en" aria-pressed="false">
+                <span class="flag" id="flag-en">🇬🇧</span> <span class="lbl">English</span>
+            </button>
+        </div>
+
+        <div class="links fade hidden" id="links" aria-live="polite" aria-label="Destinations">
+            <button type="button" class="link-btn" id="teamBtn">Cipher_team</button>
+            <button type="button" class="link-btn" id="companyBtn">CODEgy</button>
+        </div>
+    </main>
+
+    <script>
+        const langRow = document.getElementById('langRow');
+        const linksDiv = document.getElementById('links');
+        const titleEl = document.getElementById('title');
+        const subtitleEl = document.getElementById('subtitle');
+
+        const teamBtn = document.getElementById('teamBtn');
+        const companyBtn = document.getElementById('companyBtn');
+        const btnAr = document.getElementById('btn-ar');
+        const btnEn = document.getElementById('btn-en');
+
+        function ensureFlagFallback(id, text) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const unsupported = /[\u{1F1E6}-\u{1F1FF}]/u.test(el.textContent) && el.getBoundingClientRect().width < 14;
+            if (unsupported) { el.textContent = ''; el.setAttribute('data-fallback', text); }
+        }
+        requestAnimationFrame(() => {
+            ensureFlagFallback('flag-ar', 'AR');
+            ensureFlagFallback('flag-en', 'EN');
+        });
+
+        const data = {
+            ar: {
+                dir: 'rtl', lang: 'ar', title: 'اختر الوجهة', subtitle: 'اختر الحساب الذي ترغب بفتحه',
+                teamText: 'Cipher_team', companyText: 'CODEgy',
+                teamLink: 'https://www.instagram.com/cipher_team',
+                companyLink: 'https://www.instagram.com/codegy.jo'
+            },
+            en: {
+                dir: 'ltr', lang: 'en', title: 'Choose destination', subtitle: 'Pick the account you want to open',
+                teamText: 'Cipher_team', companyText: 'CODEgy',
+                teamLink: 'https://www.instagram.com/cipher_team',
+                companyLink: 'https://www.instagram.com/codegy.jo'
+            }
+        };
+
+        btnAr.addEventListener('click', () => chooseLang('ar', btnAr));
+        btnEn.addEventListener('click', () => chooseLang('en', btnEn));
+
+        function chooseLang(lang, pressedBtn) {
+            const t = data[lang] || data.en;
+
+            document.documentElement.dir = t.dir;
+            document.documentElement.lang = t.lang;
+
+            titleEl.textContent = t.title;
+            subtitleEl.textContent = t.subtitle;
+
+            [btnAr, btnEn].forEach(b => b.setAttribute('aria-pressed', b === pressedBtn ? 'true' : 'false'));
+
+            teamBtn.textContent = t.teamText;
+            companyBtn.textContent = t.companyText;
+            teamBtn.onclick = () => redirect(t.teamLink);
+            companyBtn.onclick = () => redirect(t.companyLink);
+
+            langRow.classList.add('hidden');
+            setTimeout(() => { langRow.style.display = 'none'; }, 350);
+            linksDiv.classList.remove('hidden');
+            linksDiv.classList.add('grid');
+            setTimeout(() => { teamBtn.focus(); }, 40);
+        }
+
+        function redirect(url) { location.href = url; }
+
+        (function dataFlowBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d', { alpha: true });
+
+            const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let running = !reduceMotion;
+
+            let DPR = Math.min(window.devicePixelRatio || 1, 1.75);
+            let W = 0, H = 0, time = 0;
+
+            const FLOW_COUNT = 6;
+            const SPARK_COUNT = 60;
+            const flows = [], sparks = [];
+
+            function resize() {
+                DPR = Math.min(window.devicePixelRatio || 1, 1.75);
+                W = canvas.width = Math.floor(window.innerWidth * DPR);
+                H = canvas.height = Math.floor(window.innerHeight * DPR);
+                canvas.style.width = window.innerWidth + 'px';
+                canvas.style.height = window.innerHeight + 'px';
+            }
+            resize();
+            window.addEventListener('resize', resize, { passive: true });
+
+            function rand(min, max) { return Math.random() * (max - min) + min; }
+            function bez(t, p0, p1, p2, p3) { const mt = 1 - t; return mt * mt * mt * p0 + 3 * mt * mt * t * p1 + 3 * mt * t * t * p2 + t * t * t * p3; }
+            function grad(alpha = 0.30) { const g = ctx.createLinearGradient(0, 0, W, 0); g.addColorStop(0, `rgba(110,168,254,${alpha})`); g.addColorStop(1, `rgba(0,229,255,${alpha})`); return g; }
+
+            function makeFlow() {
+                const m = 80 * DPR;
+                return {
+                    y1: rand(m, H - m),
+                    y2: rand(m, H - m),
+                    cp1: { x: rand(m, W * 0.40), y: rand(m, H - m) },
+                    cp2: { x: rand(W * 0.60, W - m), y: rand(m, H - m) },
+                    speed: rand(0.00022, 0.00045),
+                    thickness: rand(0.7, 1.5) * DPR,
+                    phase: Math.random()
+                };
+            }
+            function makeSpark() {
+                return {
+                    x: rand(0, W), y: rand(0, H),
+                    vx: rand(-0.03, 0.03) * DPR,
+                    vy: rand(-0.03, 0.03) * DPR,
+                    r: rand(0.5, 1.2) * DPR,
+                    a: rand(0.07, 0.18)
+                };
+            }
+
+            for (let i = 0; i < FLOW_COUNT; i++) flows.push(makeFlow());
+            for (let i = 0; i < SPARK_COUNT; i++) sparks.push(makeSpark());
+
+            function step(now) {
+                if (!running) return;
+                time = now || performance.now();
+
+                ctx.clearRect(0, 0, W, H);
+
+                ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+                ctx.globalCompositeOperation = 'lighter';
+                ctx.strokeStyle = grad(0.28);
+
+                flows.forEach(f => {
+                    ctx.lineWidth = f.thickness;
+                    ctx.beginPath();
+                    const p0x = 0, p3x = W;
+                    for (let i = 0; i <= 40; i++) {
+                        const tt = i / 40;
+                        const x = bez(tt, p0x, f.cp1.x, f.cp2.x, p3x);
+                        const y = bez(tt, f.y1, f.cp1.y, f.cp2.y, f.y2);
+                        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                    }
+                    ctx.stroke();
+
+                    const travel = ((time * f.speed + f.phase) % 1);
+                    for (let k = 0; k < 2; k++) {
+                        const tt = (travel + k * 0.5) % 1;
+                        const x = bez(tt, 0, f.cp1.x, f.cp2.x, W);
+                        const y = bez(tt, f.y1, f.cp1.y, f.cp2.y, f.y2);
+                        const pulse = 1.8 * DPR;
+                        const grd = ctx.createRadialGradient(x, y, 0, x, y, pulse * 3);
+                        grd.addColorStop(0, 'rgba(0,229,255,0.75)');
+                        grd.addColorStop(1, 'rgba(0,229,255,0)');
+                        ctx.fillStyle = grd;
+                        ctx.beginPath(); ctx.arc(x, y, pulse * 3, 0, Math.PI * 2); ctx.fill();
+                    }
+                });
+
+                sparks.forEach(s => {
+                    s.x += s.vx; s.y += s.vy;
+                    if (s.x < 0 || s.x > W) s.vx *= -1;
+                    if (s.y < 0 || s.y > H) s.vy *= -1;
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(160,220,255,${s.a})`;
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+                });
+
+                ctx.globalCompositeOperation = 'source-over';
+                requestAnimationFrame(step);
+            }
+            if (running) requestAnimationFrame(step);
+
+            const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (mq && mq.addEventListener) {
+                mq.addEventListener('change', e => {
+                    running = !e.matches;
+                    if (running) { resize(); requestAnimationFrame(step); }
+                    else { ctx.clearRect(0, 0, W, H); }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
